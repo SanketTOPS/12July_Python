@@ -1,0 +1,1 @@
+#WAP for input string (dynamic) with 10 methods.
