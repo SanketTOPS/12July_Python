@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 
 # Create your views here.
 def index(request):
+    user=request.session.get('user')
     if request.method=='POST': #root
         if request.POST.get('signup')=='signup': #signup
             newuser=signupForm(request.POST)
@@ -20,13 +21,19 @@ def index(request):
             pas=request.POST['password']
 
             user=usersignup.objects.filter(username=unm,password=pas)
+            fnm=usersignup.objects.get(username=unm)
+            uid=usersignup.objects.get(username=unm)
+            print("Firstname:",fnm.firstname)
+            print("Current UID:",uid.id)
             if user:
                 print("Login successfully!")
-                request.session['user']=unm
+                #request.session['user']=unm
+                request.session['user']=fnm.firstname
+                request.session['uid']=uid.id
                 return redirect('notes')
             else:
                 print("Error!Login fail.....Try again")
-    return render(request,'index.html')
+    return render(request,'index.html',{'user':user})
 
 def notes(request):
     user=request.session.get('user')
@@ -34,7 +41,18 @@ def notes(request):
 
 def profile(request):
     user=request.session.get('user')
-    return render(request,'profile.html',{'user':user})
+    uid=request.session.get('uid')
+    cuser=usersignup.objects.get(id=uid)
+    if request.method=='POST':
+        updateuser=signupForm(request.POST,instance=cuser)
+        if updateuser.is_valid():
+            #updateuser=signupForm(request.POST,instance=cuser)
+            updateuser.save()
+            return redirect('notes')
+            print("Profile updated!")
+        else:
+            print(updateuser.errors)
+    return render(request,'profile.html',{'user':user,'cuser':cuser})
 
 def about(request):
     return render(request,'about.html')
