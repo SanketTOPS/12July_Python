@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .forms import *
 from .models import *
 from django.contrib.auth import logout
+from django.core.mail import send_mail
+from FinalProject import settings
 
 # Create your views here.
 def index(request):
@@ -65,6 +67,23 @@ def about(request):
     return render(request,'about.html')
 
 def contact(request):
+    if request.method=='POST':
+        new=feedbackForm(request.POST)
+        if new.is_valid():
+            new.save()
+            print("Feedback send successfully!")
+
+            #Email Sending
+            sub="Thank You!"
+            msg=f"Dear User!\n\nThanks for your feedback, we will connect shortly!\n\nIf any queries regarding, you can contact us\n\n+91 9724799469 | help@tops-int.com\n\nThanks & Regards!\nTOPS Tech - Rajkot\nwww.tops-int.com"
+            from_email=settings.EMAIL_HOST_USER
+            #to_email=['kotechamit5@gmail.com','parthhirpara89827@gmail.com','krishnakachhad20@gmail.com','yogitabeladiya2425@gmail.com','rinkalbhad245@gmail.com','janvivora244@gmail.com','vrutikadudhat3@gmail.com','tahjudin597@gmail.com']
+            to_email=[request.POST['email']]
+
+            send_mail(subject=sub,message=msg,from_email=from_email,recipient_list=to_email)
+
+        else:
+            print(new.errors)
     return render(request,'contact.html')
 
 def userlogout(request):
