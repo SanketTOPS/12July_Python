@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jot6_9-d(92uqli+2)dy%w@7cexo#vu_4*voo*je_g#f0n%k3z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -286,3 +286,5 @@ JAZZMIN_UI_TWEAKS = {
     
     "theme": "darkly",
 }
+
+LOGIN_URL="/"

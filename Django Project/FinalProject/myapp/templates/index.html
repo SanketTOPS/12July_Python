@@ -11,6 +11,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="/static/imgs/favicon.png">
+   
 </head>
 
 <body style="background-image: url(/static/imgs/main_bg.jpg);background-size: cover;">
@@ -71,7 +72,14 @@
     </nav>
     <!-- Navbar End -->
 
-
+    {% if msg %}
+    <div class="container my-3">
+        <div class="alert alert-danger alert-dismissible fade show w-50"  role="alert">
+            <strong>Hey!</strong>{{msg}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endif %}
     <!-- Login Modal Start -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -227,7 +235,7 @@
         <div class="row align-items-center">
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="/static/imgs/sl2.png" height="250"  width="200" class="card-img-top" alt="...">
+                    <img src="/static/imgs/sl2.png" height="250" width="200" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
@@ -239,7 +247,7 @@
 
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="/static/imgs/sl3.png" height="250"  width="200" class="card-img-top" alt="...">
+                    <img src="/static/imgs/sl3.png" height="250" width="200" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of

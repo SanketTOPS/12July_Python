@@ -6,19 +6,28 @@ from django.core.mail import send_mail
 from FinalProject import settings
 import random
 import requests
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
+    msg=""
     user=request.session.get('user')
     if request.method=='POST': #root
         if request.POST.get('signup')=='signup': #signup
             newuser=signupForm(request.POST)
             if newuser.is_valid():
-                newuser.save()
-                print("Signup Successfully!")
+                username=newuser.cleaned_data.get('username')
+                try:
+                    usersignup.objects.get(username=username)
+                    print("Username is already exists!")
+                    msg="Username is already exists!"
+                except usersignup.DoesNotExist:
+                    newuser.save()
+                    print("Signup Successfully!")
+                    msg="Signup Successfully!"
             else:
                 print(newuser.errors)
-
+                msg="Error!Something went wrong...."
         elif request.POST.get('login')=='login': #login
 
             unm=request.POST['username']
@@ -37,7 +46,7 @@ def index(request):
                 return redirect('notes')
             else:
                 print("Error!Login fail.....Try again")
-    return render(request,'index.html',{'user':user})
+    return render(request,'index.html',{'user':user,'msg':msg})
 
 def notes(request):
     user=request.session.get('user')
@@ -50,6 +59,7 @@ def notes(request):
             print(newnote.errors)
     return render(request,'notes.html',{'user':user})
 
+@login_required
 def profile(request):
     user=request.session.get('user')
     uid=request.session.get('uid')
