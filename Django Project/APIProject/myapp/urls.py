@@ -6,4 +6,7 @@ urlpatterns = [
     path('',views.getall),
     path('getid/<int:id>',views.getid),
     path('deleteid/<int:id>',views.deleteid),
+    path('savedata/',views.savedata),
+    path('updatedata/<int:id>',views.updatedata),
+    path('home/',views.home),
 ]
